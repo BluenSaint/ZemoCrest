@@ -1,0 +1,27 @@
+name: My Simple Robot
+
+on:
+  # Trigger when you push code to a "commands" folder
+  push:
+    paths:
+      - 'commands/**'
+
+jobs:
+  process-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Read User Command
+        id: read-command
+        run: |
+          # Read the latest command you provided
+          COMMAND=$(cat commands/instruction.txt)
+          echo "COMMAND=$COMMAND" >> $GITHUB_OUTPUT
+
+      - name: Execute Command
+        run: |
+          # For now, we'll just print the command.
+          # Later, you can add actual commands here (be careful!).
+          echo "The robot received this command: ${{ steps.read-command.outputs.COMMAND }}"
